@@ -23,7 +23,15 @@ class ListGateway {
         ));
     }
 
-    public function findByName(string $name){
+    public function findById(int $id_list) : TaskList{
+        $query="SELECT * FROM List WHERE id_list=:id";
+        $this->connect->executeQuery($query, array(
+            ':id'=> array($id_list, PDO::PARAM_STR)));
+        $result=$this->connect->getResults();
+        return new TaskList($result['id_list'], $result['name'], $result['privacy'], $result['user']);
+    }
+
+    public function findByName(string $name) : TaskList{
         $tab=array();
         $query="SELECT * FROM List WHERE name=:name";
         $this->connect->executeQuery($query, array(

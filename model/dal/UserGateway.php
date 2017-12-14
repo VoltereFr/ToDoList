@@ -17,7 +17,7 @@ class UserGateway {
         ));
     }
 
-    public function findByName(string $login){
+    public function findByName(string $login) : User {
         $query='SELECT * FROM User WHERE login=:login';
         $this->connect->executeQuery($query, array(
             ':login'=>array($login, PDO::PARAM_STR)

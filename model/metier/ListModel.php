@@ -1,7 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: NEBOUT Cécile
- * Date: 14/12/2017
- * Time: 17:23
- */
+
+class ListModel {
+
+    private $listGw;
+
+    public function __construct() {
+        $this->listGw = new ListGateway();
+    }
+
+    public function createPublicList($list) {
+        $this->listGw->insert($list);
+    }
+
+    public function findById($id_list) {
+        return $this->listGw->findById($id_list);
+    }
+}

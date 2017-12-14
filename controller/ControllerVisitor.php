@@ -1,50 +1,65 @@
 <?php
 
-class ControllerVisitor
-{
+class ControllerVisitor {
+
+    private $listModel;
+
     private $taskModel;
 
     private $userModel;
 
     public function __construct() {
+        $this->listModel = new ListModel();
         $this->userModel = new UserModel();
         $this->taskModel = new TaskModel();
     }
 
     public function connect() {
-        $login = Sanitize::sanitize_string($_POST['username']);
-        $pwd = Sanitize::sanitize_string($_POST['password']);
-        if($this->userModel.connect($login, $pwd)){
-            require_once(Config::$views['homepage']);
-        }else{
+        try {
+            $login = Sanitize::sanitize_string($_POST['username']);
+            $pwd = Sanitize::sanitize_string($_POST['password']);
+            if ($this->userModel->connect($login, $pwd)) {
+                require_once(Config::$views['homepage']);
+            } else {
+                require_once(Config::$views['error']);
+            }
+        }
+        catch (Exception $e) {
+            $dVuesErreur[]= $e;
             require_once(Config::$views['error']);
         }
     }
 
     public function createPublicList() {
-
+        if(count($_POST)>0) {
+            $name = Sanitize::sanitize_string($_POST['name']);
+            $list = new TaskList($name, false, NULL);
+            $this->listModel->createPublicList($list);
+        }
     }
 
     public function insertTask() {
         if(count($_POST)>0) {
-            $id = Sanitize::sanitize_string($_POST['id']);
-            $name = Sanitize::sanitize_string($_POST['nom']);
+            $name = Sanitize::sanitize_string($_POST['name']);
             $task = Sanitize::sanitize_string($_POST['tache']);
             $idList= Sanitize::sanitize_string($_POST['id_list']);
             $categ = Sanitize::sanitize_string($_POST['categ']);
-            $done = Sanitize::sanitize_string($_POST['done']);
 
-            $task = new Task($id, $name, $task, $idList, $categ);
-            $this->TaskModel->insertTask($task);
+            $task = new Task($name, $task, $idList, $categ);
+            $this->taskModel->insertTask($task);
         }
     }
 
     public function deleteTask() {
+        $id = Sanitize::sanitize_string($_POST['id']);
 
+        $this->taskModel->deleteTask($id);
     }
 
     public function consultPublicList() {
-
+        $id_list = Sanitize::sanitize_string($_POST['id']);
+        $list = $this->listModel->findById($id_list);
+        $this->taskModel->getTaskFromList($id_list);
     }
 }
 

@@ -26,7 +26,7 @@ class TaskGateway {
         }
     }
 
-    public function delete($id){
+    public function delete(int $id){
         $query="DELETE FROM Task WHERE id=:id";
         try {
             $this->connect->executeQuery($query, array(
@@ -38,7 +38,7 @@ class TaskGateway {
         }
     }
 
-    public function getTaskFromList($id_list){
+    public function getTaskFromList(int $id_list){
         $tab=array();
 
         $query='SELECT * FROM Task WHERE id_list=:id_list';
@@ -53,7 +53,7 @@ class TaskGateway {
         return $tab;
     }
 
-    public function findByCateg(string $categ){
+    public function findByCateg(string $categ) {
         $tab=array();
         $query="SELECT * FROM Task WHERE categorie=:categ";
         $this->connect->executeQuery($query, array(
