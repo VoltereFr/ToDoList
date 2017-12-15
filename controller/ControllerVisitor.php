@@ -1,18 +1,6 @@
 <?php
 
-class ControllerVisitor {
-
-    private $listModel;
-
-    private $taskModel;
-
-    private $userModel;
-
-    public function __construct() {
-        $this->listModel = new ListModel();
-        $this->userModel = new UserModel();
-        $this->taskModel = new TaskModel();
-    }
+class ControllerVisitor extends AbstractController {
 
     public function connect() {
         try {
@@ -59,7 +47,8 @@ class ControllerVisitor {
     public function consultPublicList() {
         $id_list = Sanitize::sanitize_string($_POST['id']);
         $list = $this->listModel->findById($id_list);
-        $this->taskModel->getTaskFromList($id_list);
+        $task_tab = $this->taskModel->getTaskFromList($id_list);
+        require_once(Config::$views['']);
     }
 }
 

@@ -26,4 +26,11 @@ class UserModel {
             }
         }
     }
+
+    public function disconnect() : bool {
+        if(session_destroy()){
+            return true;
+        }
+        return false;
+    }
 }

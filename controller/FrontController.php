@@ -26,17 +26,20 @@ class FrontController {
             }
 
             if (in_array($action, $action_User)) {
-                $controllerUser = new ControllerUser();
-                if(method_exists($controllerUser,$action)){
-                    $controllerUser->$action();
+                if($_SESSION['login'] != NULL) {
+                    $controllerUser = new ControllerUser();
+                    if (method_exists($controllerUser, $action)) {
+                        $controllerUser->$action();
+                    } else {
+                        throw new Exception("Action inexistante");
+                    }
                 }
-                else{
-                    throw new Exception("Action inexistante");
+                else {
+                    require_once(Config::$views['']);
                 }
             }
 
             if (in_array($action, $action_Visitor)) {
-
                 $controlVisitor = new ControllerVisitor();
                 if(method_exists($controlVisitor,$action)) {
                     $controlVisitor->$action();
