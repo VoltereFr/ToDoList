@@ -9,7 +9,7 @@ class FrontController {
             'goToInscription',
             'goToAddList',
             'goToAddTask',
-
+            'addUser',
             'connect',
             'createPublicList',
             'insertTask',
@@ -59,7 +59,7 @@ class FrontController {
             }
         }
         catch (Exception $e){
-            $error= $e->getMessage() ;
+            $error[]= $e->getMessage() ;
             require_once(Config::$views['error']);
         }
     }

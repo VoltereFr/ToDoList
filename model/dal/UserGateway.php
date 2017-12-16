@@ -4,7 +4,7 @@ class UserGateway extends AbstractGateway {
 
     public function insert(User $user){
         try {
-            $query = "INSERT INTO User VALUES(:nom, :pwd, :admin)";
+            $query = "INSERT INTO User VALUES(NULL, :nom, :pwd, :admin)";
             $this->connect->executeQuery($query, array(
                 ':nom' => array($user->getLogin(), PDO::PARAM_STR),
                 ':pwd' => array($user->getPwd(), PDO::PARAM_STR),

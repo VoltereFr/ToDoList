@@ -4,8 +4,8 @@ class ControllerVisitor extends AbstractController {
 
     public function connect() {
         try {
-            $login = Sanitize::sanitize_string($_POST['username']);
-            $pwd = Sanitize::sanitize_string($_POST['password']);
+            $login = Sanitize::sanitize_string($_POST['login']);
+            $pwd = Sanitize::sanitize_string($_POST['pwd']);
             if ($this->userModel->connect($login, $pwd)) {
                 require_once(Config::$views['homepage']);
             } else {
@@ -61,6 +61,23 @@ class ControllerVisitor extends AbstractController {
 
     public function showPublicList(){
         return $this->listModel->showPublicList();
+    }
+
+    public function addUser(){
+        try {
+            $login = Sanitize::sanitize_string($_POST['login']);
+            $pwd = Sanitize::sanitize_string($_POST['pwd']);
+            if($this->userModel->addUser($login, $pwd)) {
+                require_once(Config::$views['homepage']);
+            }
+            else{
+                require_once(Config::$views['inscription']);
+            }
+        }
+        catch (Exception $e) {
+            $error[]= $e->getMessage();
+            require_once(Config::$views['error']);
+        }
     }
 }
 
