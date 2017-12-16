@@ -2,6 +2,18 @@
 
 class ControllerVisitor extends AbstractController {
 
+    public function goToInscription(){
+        require_once(Config::$views['inscription']);
+    }
+
+    public function goToHome(){
+        require_once(Config::$views['homepage']);
+    }
+
+    public function goToAddLIst(){
+        require_once(Config::$views['addList']);
+    }
+
     public function connect() {
         try {
             $login = Sanitize::sanitize_string($_POST['username']);
@@ -19,11 +31,13 @@ class ControllerVisitor extends AbstractController {
     }
 
     public function createPublicList() {
-        if(count($_POST)>0) {
-            $name = Sanitize::sanitize_string($_POST['name']);
+        if(count($_REQUEST)>0) {
+            $name = Sanitize::sanitize_string($_REQUEST['name']);
             $list = new TaskList($name, false, NULL);
             $this->listModel->createPublicList($list);
         }
+        $res =  $this->listModel->showPublicList();
+        require_once(Config::$views['homepage']);
     }
 
     public function insertTask() {
@@ -45,10 +59,14 @@ class ControllerVisitor extends AbstractController {
     }
 
     public function consultPublicList() {
-        $id_list = Sanitize::sanitize_string($_POST['id']);
+        $id_list = Sanitize::sanitize_string($_GET['listId']);
         $list = $this->listModel->findById($id_list);
         $task_tab = $this->taskModel->getTaskFromList($id_list);
         require_once(Config::$views['']);
+    }
+
+    public function showPublicList(){
+        return $this->listModel->showPublicList();
     }
 }
 

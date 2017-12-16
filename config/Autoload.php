@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: arkandros
- * Date: 27/11/17
- * Time: 19:0
- */
-
 
 /**
  * This class is a Singleton that charges all the php class and files in the project.
@@ -53,11 +46,10 @@ class Autoload {
      */
     private static function _autoload($class)
     {
-        global $rep;
         $filename = $class.'.php';
-        $dir =array('./','config/','controller/','model/');
+        $dir =array('./','config/','controller/','model/metier','model/dal', 'view');
         foreach ($dir as $d){
-            $file=$rep.$d.$filename;
+            $file=$d."/".$filename;
             if (file_exists($file))
             {
                 require_once($file);

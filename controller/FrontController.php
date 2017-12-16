@@ -5,6 +5,10 @@ class FrontController {
     public function __construct() {
 
         $action_Visitor = array(
+            'goToHome',
+            'goToInscription',
+            'goToAddList',
+            'goToAddList',
             'connect',
             'createPublicList',
             'insertTask',
@@ -18,9 +22,11 @@ class FrontController {
             'deletePrivateList');
 
         try {
+            $controlVisitor = new ControllerVisitor();
             if (isset($_REQUEST['action'])) {
                 $action = Sanitize::sanitize_string($_REQUEST['action']);
             } else{
+                $res = $controlVisitor->showPublicList();
                 require_once(Config::$views['homepage']);
                 return;
             }
@@ -35,12 +41,11 @@ class FrontController {
                     }
                 }
                 else {
-                    require_once(Config::$views['']);
+                    require_once(Config::$views['error']);
                 }
             }
 
             if (in_array($action, $action_Visitor)) {
-                $controlVisitor = new ControllerVisitor();
                 if(method_exists($controlVisitor,$action)) {
                     $controlVisitor->$action();
                 }
@@ -50,6 +55,7 @@ class FrontController {
             }
         }
         catch (Exception $e){
+            $dVueError= $e ;
             require_once(Config::$views['error']);
         }
     }

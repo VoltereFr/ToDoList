@@ -1,6 +1,6 @@
 <?php
 
-class ListGateway {
+class TaskListGateway {
     private $connect;
 
     public function __construct(){
@@ -8,12 +8,17 @@ class ListGateway {
     }
 
     public function insert(TaskList $list){
-        $query="INSERT INTO List VALUES(:name, :privacy, :user)";
-        $this->connect->executeQuery($query, array(
-            ':name' => array($list->getName(), PDO::PARAM_STR),
-            ':privacy' => array($list->isPrivate(), PDO::PARAM_BOOL),
-            ':user' => array($list->getUser(), PDO::PARAM_INT),
-        ));
+        $query="INSERT INTO List VALUES(NULL, :name, :privacy, :user)";
+        try {
+            $this->connect->executeQuery($query, array(
+                ':name' => array($list->getName(), PDO::PARAM_STR),
+                ':privacy' => array($list->isPrivate(), PDO::PARAM_BOOL),
+                ':user' => array($list->getUser(), PDO::PARAM_INT),
+            ));
+        }
+        catch(PDOException $e){
+            throw new Exception($e->getMessage());
+        }
     }
 
     public function delete(TaskList $list){
@@ -48,6 +53,17 @@ class ListGateway {
         $query="SELECT * FROM List WHERE privacy=:privacy";
         $this->connect->executeQuery($query, array(
             ':privacy'=> array($privacy, PDO::PARAM_BOOL)));
+        $result=$this->connect->getResults();
+        foreach($result as $value){
+            $tab[]=new TaskList($value['id_list'], $value['name'], $value['privacy'], $value['user']);
+        }
+        return $tab;
+    }
+
+    public function selectAll(){
+        $tab=array();
+        $query="SELECT * FROM List";
+        $this->connect->executeQuery($query);
         $result=$this->connect->getResults();
         foreach($result as $value){
             $tab[]=new TaskList($value['id_list'], $value['name'], $value['privacy'], $value['user']);

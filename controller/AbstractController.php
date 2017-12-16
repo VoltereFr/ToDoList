@@ -1,6 +1,7 @@
 <?php
 
 abstract class AbstractController {
+
     protected $listModel;
 
     protected $taskModel;

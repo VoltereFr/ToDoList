@@ -5,7 +5,7 @@ class ListModel {
     private $listGw;
 
     public function __construct() {
-        $this->listGw = new ListGateway();
+        $this->listGw = new TaskListGateway();
     }
 
     public function createPublicList($list) {
@@ -14,5 +14,9 @@ class ListModel {
 
     public function findById($id_list) {
         return $this->listGw->findById($id_list);
+    }
+
+    public function showPublicList() {
+        return $this->listGw->selectAll();
     }
 }

@@ -63,7 +63,7 @@ class TaskList {
         return $this->user;
     }
 
-    public function isPrivate() : Boolean{
+    public function isPrivate() : bool{
         return $this->privacy;
     }
 }

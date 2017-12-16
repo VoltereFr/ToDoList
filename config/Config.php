@@ -14,8 +14,17 @@ class Config
     public static $pwd = 'gulivet1';
 
     public static $views = array(
+        'inscription' => 'view/inscription.php',
         'error' => 'view/error.php',
-        'homepage' => 'view/homepage.php'
+        'homepage' => 'view/homepage.php',
+        'addList' => 'view/addList.php',
+        'addTask' => 'view/addTask.php'
     );
 
+    /*$views['inscription'] = 'View/inscription.php';
+    $views['error'] = 'View/error.php';
+    $views['homepage'] = 'View/homepage.php';
+    $views['addList'] = 'View/addList.php';
+    $views['addTask'] = 'View/addTask.php';
+*/
 }
