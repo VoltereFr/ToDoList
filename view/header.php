@@ -32,11 +32,11 @@
                         <form action="http://localhost/ToDoList/?action=connect" method="post">
                             <div class="form-group col-md-6">
                                 <label for="inputLogin">Login</label>
-                                <input type="text" class="form-control" id="inputLogin">
+                                <input type="text" class="form-control"  name="login">
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="inputPassword4">Password</label>
-                                <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                                <input type="password" class="form-control" name="pwd" placeholder="Password">
                             </div>
                             <input type="submit" value="Submit">
                             <input type="hidden" name="action" value="connect">

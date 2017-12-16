@@ -4,16 +4,16 @@
     <title>ToDoList</title>
 </head>
 <body>
-    <h1>Error</h1>
+    <h1>Error :</h1>
     <?php
-    if(isset($dVueError)) {
-        if(is_array($dVueError)) {
-            foreach ($dVueError as $error) {
-                echo($error);
+    if(isset($error)) {
+        if(is_array($error)) {
+            foreach ($error as $err) {
+                echo($err);
             }
         }
         else {
-            echo $dVueError;
+            echo $error;
         }
     }
     ?>

@@ -2,18 +2,6 @@
 
 class ControllerVisitor extends AbstractController {
 
-    public function goToInscription(){
-        require_once(Config::$views['inscription']);
-    }
-
-    public function goToHome(){
-        require_once(Config::$views['homepage']);
-    }
-
-    public function goToAddLIst(){
-        require_once(Config::$views['addList']);
-    }
-
     public function connect() {
         try {
             $login = Sanitize::sanitize_string($_POST['username']);
@@ -33,10 +21,10 @@ class ControllerVisitor extends AbstractController {
     public function createPublicList() {
         if(count($_REQUEST)>0) {
             $name = Sanitize::sanitize_string($_REQUEST['name']);
-            $list = new TaskList($name, false, NULL);
-            $this->listModel->createPublicList($list);
+
+            $this->listModel->createPublicList($name);
         }
-        $res =  $this->listModel->showPublicList();
+        $res = $this->showPublicList();
         require_once(Config::$views['homepage']);
     }
 
@@ -44,25 +32,31 @@ class ControllerVisitor extends AbstractController {
         if(count($_POST)>0) {
             $name = Sanitize::sanitize_string($_POST['name']);
             $task = Sanitize::sanitize_string($_POST['tache']);
-            $idList= Sanitize::sanitize_string($_POST['id_list']);
+            $idList= Sanitize::sanitize_string($_GET['id_list']);
             $categ = Sanitize::sanitize_string($_POST['categ']);
 
-            $task = new Task($name, $task, $idList, $categ);
-            $this->taskModel->insertTask($task);
+            $this->taskModel->insertTask($name, $task, $idList, $categ);
         }
     }
 
     public function deleteTask() {
-        $id = Sanitize::sanitize_string($_POST['id']);
+        $id = Sanitize::sanitize_string($_GET['id']);
+        $id_list = Sanitize::sanitize_string($_GET['id_list']);
 
-        $this->taskModel->deleteTask($id);
+        $this->taskModel->deleteTask($id, $id_list);
+    }
+
+    public function deleteList() {
+        $id_list = Sanitize::sanitize_string($_GET['id_list']);
+
+        $this->listModel->deleteList($id_list);
     }
 
     public function consultPublicList() {
         $id_list = Sanitize::sanitize_string($_GET['listId']);
         $list = $this->listModel->findById($id_list);
         $task_tab = $this->taskModel->getTaskFromList($id_list);
-        require_once(Config::$views['']);
+        require_once(Config::$views['showList']);
     }
 
     public function showPublicList(){

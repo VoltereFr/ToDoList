@@ -8,10 +8,12 @@ class FrontController {
             'goToHome',
             'goToInscription',
             'goToAddList',
-            'goToAddList',
+            'goToAddTask',
+
             'connect',
             'createPublicList',
             'insertTask',
+            'deleteList',
             'deleteTask',
             'consultPublicLists');
 
@@ -22,7 +24,9 @@ class FrontController {
             'deletePrivateList');
 
         try {
+
             $controlVisitor = new ControllerVisitor();
+
             if (isset($_REQUEST['action'])) {
                 $action = Sanitize::sanitize_string($_REQUEST['action']);
             } else{
@@ -41,7 +45,7 @@ class FrontController {
                     }
                 }
                 else {
-                    require_once(Config::$views['error']);
+                    require_once(Config::$views['homepage']);
                 }
             }
 
@@ -55,7 +59,7 @@ class FrontController {
             }
         }
         catch (Exception $e){
-            $dVueError= $e ;
+            $error= $e->getMessage() ;
             require_once(Config::$views['error']);
         }
     }

@@ -11,7 +11,6 @@ class TaskList {
     private $user;
 
     public function __construct() {
-
         $cpt = func_num_args();
         $args = func_get_args();
 

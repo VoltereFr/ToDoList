@@ -22,7 +22,7 @@
 
                     echo "<tr>";
                     echo "<td><a href=\"?listId=".$row->getId()."&listName=".$row."&action=consultPublicList\">" . $row . "</a></td>";
-                    echo "<td><a href=\"?listId=".$row->getId()."&action=delete\">Delete</a></td>";
+                    echo "<td><a href=\"?listId=".$row->getId()."&action=deleteList\">Delete</a></td>";
                     echo "</tr>";
                 }
             }

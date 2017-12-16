@@ -8,7 +8,8 @@ class ListModel {
         $this->listGw = new TaskListGateway();
     }
 
-    public function createPublicList($list) {
+    public function createPublicList($login) {
+        $list = new TaskList($login, false, NULL);
         $this->listGw->insert($list);
     }
 
@@ -18,5 +19,9 @@ class ListModel {
 
     public function showPublicList() {
         return $this->listGw->selectAll();
+    }
+
+    public function deleteList($id_list){
+        $this->listGw->delete($id_list);
     }
 }
