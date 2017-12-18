@@ -17,13 +17,17 @@ class ControllerUser extends AbstractController {
         }
     }
 
-    public function createPrivateList()
-    {
+    public function showPrivateList() {
+        return $this->listModel->showPrivateList(Sanitize::sanitize_int($_SESSION['id']));
+    }
+
+    public function createPrivateList() {
         if (count($_REQUEST) > 0) {
             $name = Sanitize::sanitize_string($_REQUEST['name']);
             $list = new TaskList($name, true, Sanitize::sanitize_int($_SESSION['id']));
             $this->listModel->createList($list);
-        } else {
+        }
+        else {
             throw new Exception("Impossible de créer la liste, paramètres incorrects");
         }
         $res = $this->showPrivateList();
@@ -37,7 +41,7 @@ class ControllerUser extends AbstractController {
     }
 
     public function consultPrivateList() {
-        $id_list = Sanitize::sanitize_string($_REQUEST['id']);
+        $id_list = Sanitize::sanitize_int($_REQUEST['id']);
         $list = $this->listModel->findById($id_list);
         if($list['user'] != Sanitize::sanitize_int($_SESSION['id'])) {
             $error[]= "Vous n'avez pas les droits d'accès à cette liste" ;
@@ -47,9 +51,5 @@ class ControllerUser extends AbstractController {
             $task_tab = $this->taskModel->getTaskFromList($id_list);
             require_once(Config::$views['privateList']);
         }
-    }
-
-	public function showPrivateList(){
-        return $this->listModel->showPrivateList(Sanitize::sanitize_int($_SESSION['id']));
     }
 }

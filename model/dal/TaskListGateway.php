@@ -2,7 +2,7 @@
 
 class TaskListGateway extends AbstractGateway {
 
-    public function insert(TaskList $list){
+    public function insert(TaskList $list) {
         $query="INSERT INTO List VALUES(NULL, :name, :privacy, :user)";
         try {
             $this->connect->executeQuery($query, array(
@@ -11,7 +11,7 @@ class TaskListGateway extends AbstractGateway {
                 ':user' => array($list->getUser(), PDO::PARAM_INT),
             ));
         }
-        catch(PDOException $e){
+        catch(PDOException $e) {
             throw new Exception("Impossible d'ajouter la liste à la base de donnée");
         }
     }
@@ -36,7 +36,7 @@ class TaskListGateway extends AbstractGateway {
             $result = $this->connect->getResults();
             return new TaskList($result['0']['id_list'], $result['0']['name'], $result['0']['privacy'], $result['0']['user']);
         }
-        catch (PDOException $e){
+        catch (PDOException $e) {
             throw new Exception("Impossible d'acceder à la base de donnée");
         }
     }
@@ -80,6 +80,23 @@ class TaskListGateway extends AbstractGateway {
         try {
             $query = "SELECT * FROM List";
             $this->connect->executeQuery($query);
+            $result = $this->connect->getResults();
+            foreach ($result as $value) {
+                $tab[] = new TaskList($value['id_list'], $value['name'], $value['privacy'], $value['user']);
+            }
+            return $tab;
+        }
+        catch (PDOException $e){
+            throw new Exception("Impossible d'acceder à la base de donnée");
+        }
+    }
+
+    public function selectPublicList(){
+        $tab=array();
+        try {
+            $query = "SELECT * FROM List WHERE privacy=:privacy";
+            $this->connect->executeQuery($query, array(
+                ':privacy' => array(0, PDO::PARAM_BOOL)));
             $result = $this->connect->getResults();
             foreach ($result as $value) {
                 $tab[] = new TaskList($value['id_list'], $value['name'], $value['privacy'], $value['user']);

@@ -1,19 +1,13 @@
-<?php
-?>
-
 <html>
-<body>
+    <body>
+        <?php
+        require_once(__DIR__.'/config/Config.php');
+        require_once(__DIR__.'/config/Autoload.php');
 
-<?php
-//charge la configuration de notre projet
-require_once(__DIR__.'/config/Config.php');
-require_once(__DIR__.'/config/Autoload.php');
+        session_start();
+        Autoload::load();
 
-session_start();
-Autoload::load();
-
-$controller = new FrontController();
-?>
-
-</body>
+        $controller = new FrontController();
+        ?>
+    </body>
 </html>
