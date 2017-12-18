@@ -90,4 +90,22 @@ class TaskListGateway extends AbstractGateway {
             throw new Exception("Impossible d'acceder à la base de donnée");
         }
     }
+
+	public function selectPrivateList(int $user_id){
+        $tab=array();
+        try {
+            $query = "SELECT * FROM List WHERE privacy=:private AND user=:user";
+            $this->connect->executeQuery($query, array(
+                ':privacy' => array(1, PDO::PARAM_BOOL),
+		':user' => array($user_id, PDO::PARAM_INT)));
+            $result = $this->connect->getResults();
+            foreach ($result as $value) {
+                $tab[] = new TaskList($value['id_list'], $value['name'], $value['privacy'], $value['user']);
+            }
+            return $tab;
+        }
+        catch (PDOException $e){
+            throw new Exception("Impossible d'acceder à la base de donnée");
+        }
+    }
 }

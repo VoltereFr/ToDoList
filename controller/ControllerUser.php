@@ -19,7 +19,7 @@ class ControllerUser extends AbstractController {
         if (count($_POST) > 0) {
             $name = Sanitize::sanitize_string($_POST['name']);
             $list = new TaskList($name, true, $_SESSION['login']);
-            $this->listModel->createPublicList($list);
+            $this->listModel->createList($list);
         }
     }
 
@@ -34,5 +34,10 @@ class ControllerUser extends AbstractController {
         $list = $this->listModel->findById($id_list);
         $task_tab = $this->taskModel->getTaskFromList($id_list);
         require_once(Config::$views['']);
+    }
+
+	public function showPrivateList(){
+		$user = $this->userModel->findByName($_SESSION['user'])
+        return $this->listModel->showPrivateList($user['id_user']);
     }
 }

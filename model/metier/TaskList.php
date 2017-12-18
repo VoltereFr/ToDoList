@@ -24,21 +24,21 @@ class TaskList {
         }
     }
 
-    private function constructWithoutId($name,$privacy,$user){
+    private function constructWithoutId($name,$privacy,$user_id){
         $this->name = $name;
         $this->privacy = $privacy;
         if($privacy)
-            $this->user = $user;
+            $this->user = $user_id;
         else
             $this->user = NULL;
     }
 
-    private function constructWithId($id_list, $name,$privacy,$user){
+    private function constructWithId($id_list, $name,$privacy,$user_id){
         $this->id_list=$id_list;
         $this->name = $name;
         $this->privacy = $privacy;
         if($privacy)
-            $this->user = $user;
+            $this->user = $user_id;
         else
             $this->user = NULL;
     }

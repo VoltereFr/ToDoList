@@ -26,6 +26,13 @@ class UserModel {
         }
     }
 
+	public function disconnect() : bool {
+        if(session_destroy()){
+            return true;
+        }
+        return false;
+    }
+
     public function addUser($login, $pwd) : bool{
         $user= $this->userGw->findByName($login);
         if(empty($user)) {
@@ -38,11 +45,8 @@ class UserModel {
             return false;
         }
     }
-
-    public function disconnect() : bool {
-        if(session_destroy()){
-            return true;
-        }
-        return false;
-    }
+	
+	public function findByName(string $login) : User{
+		return $this->userGw->findByName($login);		
+	}
 }

@@ -22,10 +22,27 @@ class ControllerVisitor extends AbstractController {
         if(count($_REQUEST)>0) {
             $name = Sanitize::sanitize_string($_REQUEST['name']);
 
-            $this->listModel->createPublicList($name);
+            $this->listModel->createList($name);
         }
         $res = $this->showPublicList();
         require_once(Config::$views['homepage']);
+    }
+
+	public function consultPublicList() {
+        $id_list = Sanitize::sanitize_string($_GET['listId']);
+        $list = $this->listModel->findById($id_list);
+        $task_tab = $this->taskModel->getTaskFromList($id_list);
+        require_once(Config::$views['showList']);
+    }
+
+    public function showPublicList(){
+        return $this->listModel->showPublicList();
+    }
+
+    public function deleteList() {
+        $id_list = Sanitize::sanitize_string($_GET['id_list']);
+
+        $this->listModel->deleteList($id_list);
     }
 
     public function insertTask() {
@@ -44,23 +61,6 @@ class ControllerVisitor extends AbstractController {
         $id_list = Sanitize::sanitize_string($_GET['id_list']);
 
         $this->taskModel->deleteTask($id, $id_list);
-    }
-
-    public function deleteList() {
-        $id_list = Sanitize::sanitize_string($_GET['id_list']);
-
-        $this->listModel->deleteList($id_list);
-    }
-
-    public function consultPublicList() {
-        $id_list = Sanitize::sanitize_string($_GET['listId']);
-        $list = $this->listModel->findById($id_list);
-        $task_tab = $this->taskModel->getTaskFromList($id_list);
-        require_once(Config::$views['showList']);
-    }
-
-    public function showPublicList(){
-        return $this->listModel->showPublicList();
     }
 
     public function addUser(){
