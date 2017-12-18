@@ -32,9 +32,9 @@ class TaskListGateway extends AbstractGateway {
         try {
             $query = "SELECT * FROM List WHERE id_list=:id";
             $this->connect->executeQuery($query, array(
-                ':id' => array($id_list, PDO::PARAM_STR)));
+                ':id' => array($id_list, PDO::PARAM_INT)));
             $result = $this->connect->getResults();
-            return new TaskList($result['id_list'], $result['name'], $result['privacy'], $result['user']);
+            return new TaskList($result['0']['id_list'], $result['0']['name'], $result['0']['privacy'], $result['0']['user']);
         }
         catch (PDOException $e){
             throw new Exception("Impossible d'acceder à la base de donnée");
@@ -94,10 +94,10 @@ class TaskListGateway extends AbstractGateway {
 	public function selectPrivateList(int $user_id){
         $tab=array();
         try {
-            $query = "SELECT * FROM List WHERE privacy=:private AND user=:user";
+            $query = "SELECT * FROM List WHERE privacy=:private AND id_user=:id";
             $this->connect->executeQuery($query, array(
                 ':privacy' => array(1, PDO::PARAM_BOOL),
-		':user' => array($user_id, PDO::PARAM_INT)));
+		        ':id' => array($user_id, PDO::PARAM_INT)));
             $result = $this->connect->getResults();
             foreach ($result as $value) {
                 $tab[] = new TaskList($value['id_list'], $value['name'], $value['privacy'], $value['user']);

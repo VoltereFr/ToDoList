@@ -22,7 +22,7 @@ class ListModel {
     }
 
 	public function showPrivateList(int $user_id) {
-        return $this->listGw->selectPrivateList($uer_id);
+        return $this->listGw->selectPrivateList($user_id);
     }
 
     public function deleteList($id_list){

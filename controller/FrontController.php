@@ -15,7 +15,7 @@ class FrontController {
             'insertTask',
             'deleteList',
             'deleteTask',
-            'consultPublicLists');
+            'consultPublicList');
 
         $action_User = array(
             'disconnect',
@@ -36,7 +36,7 @@ class FrontController {
             }
 
             if (in_array($action, $action_User)) {
-                if($_SESSION['login'] != NULL) {
+                if(isset($_SESSION['login'])) {
                     $controllerUser = new ControllerUser();
                     if (method_exists($controllerUser, $action)) {
                         $controllerUser->$action();
@@ -45,7 +45,7 @@ class FrontController {
                     }
                 }
                 else {
-                    require_once(Config::$views['homepage']);
+                    require_once(Config::$views['error']);
                 }
             }
 

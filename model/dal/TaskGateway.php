@@ -19,12 +19,11 @@ class TaskGateway extends AbstractGateway {
         }
     }
 
-    public function delete(int $id, int $id_list){
-        $query="DELETE FROM Task WHERE id=:id AND id_list=:id_list";
+    public function delete(int $id){
+        $query="DELETE FROM Task WHERE id_task=:id";
         try {
             $this->connect->executeQuery($query, array(
-                ':id' => array($id, PDO::PARAM_INT),
-                ':id_list' => array($id_list, PDO::PARAM_INT)
+                ':id' => array($id, PDO::PARAM_INT)
             ));
         }
         catch(PDOException $e){
@@ -34,21 +33,20 @@ class TaskGateway extends AbstractGateway {
 
     public function getTaskFromList(int $id_list){
         $tab=array();
-
         try {
-            $query = 'SELECT * FROM Task WHERE id_list=:id_list';
+            $query = 'SELECT * FROM Task WHERE fk_id_list =:id_list';
             $this->connect->executeQuery($query, array(
                 ':id_list' => array($id_list, PDO::PARAM_INT)
             ));
             $result = $this->connect->getResults();
 
             foreach ($result as $value) {
-                $tab[] = new Task($value['id'], $value['name'], $value['task'], $value['id_list'], $value['categorie'], $value['done']);
+                $tab[] = new Task($value['id_task'], $value['name'], $value['task'], $value['fk_id_list'], $value['categorie'], $value['done']);
             }
             return $tab;
         }
         catch (PDOException $e){
-            throw new Exception("Impossible d'acceder à la base de donnée");
+            return NULL;
         }
     }
 

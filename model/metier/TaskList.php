@@ -43,8 +43,8 @@ class TaskList {
             $this->user = NULL;
     }
 
-    public function __toString():String{
-        return $this->name;
+    public function __toString() {
+        return (string) $this->name;
     }
 
     public function getName()

@@ -16,7 +16,8 @@ class UserModel {
                 return false;
             }
             else {
-                $_SESSION['user']=$user['username'];
+                $_SESSION['login']=$user['login'];
+                $_SESSION['id']=$user['id_user'];
                 return true;
             }
         }
@@ -27,7 +28,7 @@ class UserModel {
     }
 
 	public function disconnect() : bool {
-        if(session_destroy()){
+        if(session_destroy()) {
             return true;
         }
         return false;
@@ -38,7 +39,9 @@ class UserModel {
         if(empty($user)) {
             $new_user = new User($login, $pwd, false);
             $this->userGw->insert($new_user);
-            $_SESSION['user']=$new_user['login'];
+            $new_user= $this->userGw->findByName($login);
+            $_SESSION['login']=$new_user['login'];
+            $_SESSION['id']=$new_user['id_user'];
             return true;
         }
         else {

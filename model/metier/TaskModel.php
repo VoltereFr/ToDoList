@@ -13,8 +13,8 @@ class TaskModel {
         $this->taskGw->insert($task);
     }
 
-    public function deleteTask($id_task, $id_list) {
-        $this->taskGw->delete($id_task, id_list);
+    public function deleteTask($id_task) {
+        $this->taskGw->delete($id_task);
     }
 
     public function getTaskFromList($id_list) {

@@ -19,10 +19,6 @@ abstract class AbstractController {
         require_once(Config::$views['inscription']);
     }
 
-    public function goToHome(){
-        require_once(Config::$views['homepage']);
-    }
-
     public function goToAddList(){
         require_once(Config::$views['addList']);
     }

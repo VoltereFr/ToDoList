@@ -5,7 +5,7 @@
 
     <?php require('header.php');?>
 
-        <form action="http://localhost/ToDoList/AddTask.php?action=addTask" method="post">
+        <form>
             <div>
                 <label>name</label>
                 <input type="text" name="name" />
@@ -21,7 +21,7 @@
             <div>
                 <button type="submit">Valider</button>
                 <input type="submit" value="Add Task">
-                <input type="hidden" value="addTask">
+                <input type="hidden" name="action" value="addTask">
             </div>
         </form>
     </body>
